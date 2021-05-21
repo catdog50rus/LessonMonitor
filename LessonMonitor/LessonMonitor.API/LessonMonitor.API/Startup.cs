@@ -1,3 +1,5 @@
+using LessonMonitor.API.Middleware;
+using LessonMonitor.API.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -21,7 +23,6 @@ namespace LessonMonitor.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -48,10 +49,11 @@ namespace LessonMonitor.API
             }
 
             app.UseHttpsRedirection();
-
+            
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseMiddleware<LogRequestResponseMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {

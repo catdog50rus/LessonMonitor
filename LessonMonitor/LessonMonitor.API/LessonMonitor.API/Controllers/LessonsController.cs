@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 
 namespace LessonMonitor.API.Controllers
@@ -26,7 +27,25 @@ namespace LessonMonitor.API.Controllers
         [HttpGet]
         public IEnumerable<Lesson> GetLessons()
         {
-            return new List<Lesson>();
+            return new List<Lesson> 
+            {
+               new Lesson
+               {
+                   Id = Guid.NewGuid(),
+                   Title = "Lesson",
+                   Description = "Description"
+               }
+            };
+        }
+
+        [HttpPost]
+        public IActionResult Insert(Lesson lesson)
+        {
+            if (lesson is null)
+                return NoContent();
+
+            return Ok(lesson.Id);
+
         }
     }
 }
